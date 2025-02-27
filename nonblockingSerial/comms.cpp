@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 void messageInit(Message& msg) {
   msg.cmd = Command::help;
+  msg.isValid = true;
   msg.errorMsg = "";
 }
 

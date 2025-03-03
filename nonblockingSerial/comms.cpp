@@ -21,7 +21,7 @@ void messageInit(Message& msg) {
 // If no char limit is desired, then pass 0 for the `char_limit` argument.
 // 
 // This function call is non-blocking.
-bool readStringUntil(String& input, char untilChar, size_t char_limit) {
+bool readStringUntil(String& input, char untilChar, size_t charLimit) {
   static bool timerRunning;
   static unsigned long timerStart;
   static const unsigned long timeout_ms = 1000; // 1 sec; set to 0 for no timeout
@@ -34,7 +34,7 @@ bool readStringUntil(String& input, char untilChar, size_t char_limit) {
     if (c == untilChar) {
       return true;
     }
-    if (char_limit && (input.length() >= char_limit)) {
+    if (charLimit && (input.length() >= charLimit)) {
       return true;
     }
     // Restart timer running if the timeout is non-zero.

@@ -2,6 +2,8 @@
 
 #include "comms.h"
 
+void clearSerialBuffer();
+
 ///////////////////////////////////////////////////////////////////////////////////////
 /// Serial communications
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -59,7 +61,8 @@ void parseMessage(const String& input, Message& msg) {
   // exceeding the limit should produce an invalid command.
   if (input.charAt(input.length() - 1) != LINE_TERMINATOR) {
     msg.isValid = false;
-    msg.errorMsg = "No line terminator found";
+    msg.errorMsg = "Command character limit exceeded without finding a line terminator";
+    clearSerialBuffer();
     return;
   }
   int verbEnd = input.indexOf(' ');
@@ -82,5 +85,14 @@ void parseMessage(const String& input, Message& msg) {
     msg.isValid = false;
     msg.errorMsg = "Unrecognized command: " + input;
     return;
+  }
+}
+
+void clearSerialBuffer() {
+  // Small delay to allow the buffer to fill with any pending characters
+  delay(10);
+
+  while (Serial.available() > 0) {
+    Serial.read();
   }
 }
